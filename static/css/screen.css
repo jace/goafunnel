@@ -269,7 +269,7 @@ header, #main {
 }
 
 header {
-  padding: 0 1em 0;
+  padding: 1em 1em 0;
   border-bottom: 1px solid #b7b7b7;
 }
 
@@ -314,10 +314,10 @@ footer #footer_content {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('/static/img/logo.png?1307240654');
+  background-image: url('/static/img/logo.png?1358794582');
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  width: 145px;
+  width: 248px;
   height: 100px;
 }
 #logo a {
@@ -563,7 +563,7 @@ img.login_avatar {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('/static/img/home.png?1307113907');
+  background-image: url('/static/img/home.png?1358793485');
   background-repeat: no-repeat;
   background-position: 12 22;
   width: 12px;
@@ -864,7 +864,7 @@ select {
 }
 
 input[name="openid"] {
-  background: url('/static/img/openid.png?1306483736') 4px no-repeat;
+  background: url('/static/img/openid.png?1358793485') 4px no-repeat;
   width: 230px;
   padding-left: 25px;
 }
@@ -919,7 +919,7 @@ input[type="submit"].delete:hover {
 
 span.loading {
   display: inline-block;
-  background: url('/static/img/ajax-loader.gif?1306483736') center no-repeat;
+  background: url('/static/img/ajax-loader.gif?1358793485') center no-repeat;
   width: 16px;
   height: 16px;
 }
