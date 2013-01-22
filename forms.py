@@ -48,11 +48,12 @@ class ProposalForm(wtf.Form):
         description="What is the expected benefit for someone attending this?")
     session_type = wtf.RadioField('Session type', validators=[wtf.Required()], choices=[
         ('Lecture', 'Lecture'),
-        ('Demo', 'Demo'),
-        ('Tutorial', 'Tutorial'),
+        ('Debate', 'Debate'),
+        ('Q&A', 'Q&A'),
         ('Workshop', 'Workshop'),
-        ('Discussion', 'Discussion'),
-        ('Panel', 'Panel'),
+        ('Lightning Talk', 'Lightning Talk'),
+        ('BoF Meet', 'BoF Meet'),
+        ('Demo', 'Demo'),
         ])
     technical_level = wtf.RadioField('Technical level', validators=[wtf.Required()], choices=[
         ('Beginner', 'Beginner'),
