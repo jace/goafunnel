@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 
-import flask.ext.wtf as wtf
+from flask.ext.wtf import Form
+import wtforms
+import wtforms.fields.html5
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 from models import SPACESTATUS, ProposalSpaceSection
 
 
-class ProposalSpaceForm(wtf.Form):
-    name = wtf.TextField('URL name', validators=[wtf.Required()])
-    title = wtf.TextField('Title', validators=[wtf.Required()])
-    datelocation = wtf.TextField('Date and Location', validators=[wtf.Required()])
-    date = wtf.DateField('Date (for sorting)', validators=[wtf.Required()])
-    tagline = wtf.TextField('Tagline', validators=[wtf.Required()])
-    description = wtf.TextAreaField('Description', validators=[wtf.Required()])
-    status = wtf.SelectField('Status', coerce=int, choices=[
+class ProposalSpaceForm(Form):
+    name = wtforms.TextField('URL name', validators=[wtforms.validators.Required()])
+    title = wtforms.TextField('Title', validators=[wtforms.validators.Required()])
+    datelocation = wtforms.TextField('Date and Location', validators=[wtforms.validators.Required()])
+    date = wtforms.DateField('Date (for sorting)', validators=[wtforms.validators.Required()])
+    tagline = wtforms.TextField('Tagline', validators=[wtforms.validators.Required()])
+    description = wtforms.TextAreaField('Description', validators=[wtforms.validators.Required()])
+    status = wtforms.SelectField('Status', coerce=int, choices=[
         (0, 'Draft'),
         (1, 'Open'),
         (2, 'Voting'),
@@ -23,30 +26,30 @@ class ProposalSpaceForm(wtf.Form):
         ])
 
 
-class SectionForm(wtf.Form):
-    name = wtf.TextField('URL name', validators=[wtf.Required()])
-    title = wtf.TextField('Title', validators=[wtf.Required()])
-    description = wtf.TextAreaField('Description', validators=[wtf.Required()])
-    public = wtf.BooleanField('Public?')
+class SectionForm(Form):
+    name = wtforms.TextField('URL name', validators=[wtforms.validators.Required()])
+    title = wtforms.TextField('Title', validators=[wtforms.validators.Required()])
+    description = wtforms.TextAreaField('Description', validators=[wtforms.validators.Required()])
+    public = wtforms.BooleanField('Public?')
 
 
-class ProposalForm(wtf.Form):
-    email = wtf.html5.EmailField('Your email address', validators=[wtf.Required()],
+class ProposalForm(Form):
+    email = wtforms.fields.html5.EmailField('Your email address', validators=[wtforms.validators.Required()],
         description="An email address we can contact you at. "\
             "Not displayed anywhere")
-    phone = wtf.TextField('Phone number', validators=[wtf.Required()],
+    phone = wtforms.TextField('Phone number', validators=[wtforms.validators.Required()],
         description="A phone number we can call you at to discuss your proposal, if required. "
             "Will not be displayed")
-    speaking = wtf.RadioField("Are you speaking?", coerce=int,
+    speaking = wtforms.RadioField("Are you speaking?", coerce=int,
         choices=[(1, u"I will be speaking"),
                  (0, u"I’m proposing a topic for someone to speak on")])
-    title = wtf.TextField('Title', validators=[wtf.Required()],
+    title = wtforms.TextField('Title', validators=[wtforms.validators.Required()],
         description="The title of your session")
-    section = wtf.QuerySelectField('Section', get_label='title', validators=[wtf.Required()],
-        widget=wtf.ListWidget(prefix_label=False), option_widget=wtf.RadioInput())
-    objective = wtf.TextAreaField('Objective', validators=[wtf.Required()],
+    section = QuerySelectField('Section', get_label='title', validators=[wtforms.validators.Required()],
+        widget=wtforms.widgets.ListWidget(prefix_label=False), option_widget=wtforms.widgets.RadioInput())
+    objective = wtforms.TextAreaField('Objective', validators=[wtforms.validators.Required()],
         description="What is the expected benefit for someone attending this?")
-    session_type = wtf.RadioField('Session type', validators=[wtf.Required()], choices=[
+    session_type = wtforms.RadioField('Session type', validators=[wtforms.validators.Required()], choices=[
         ('Lecture', 'Lecture'),
         ('Debate', 'Debate'),
         ('Q&A', 'Q&A'),
@@ -55,46 +58,46 @@ class ProposalForm(wtf.Form):
         ('BoF Meet', 'BoF Meet'),
         ('Demo', 'Demo'),
         ])
-    technical_level = wtf.RadioField('Technical level', validators=[wtf.Required()], choices=[
+    technical_level = wtforms.RadioField('Technical level', validators=[wtforms.validators.Required()], choices=[
         ('Beginner', 'Beginner'),
         ('Intermediate', 'Intermediate'),
         ('Advanced', 'Advanced'),
         ])
-    description = wtf.TextAreaField('Description', validators=[wtf.Required()],
+    description = wtforms.TextAreaField('Description', validators=[wtforms.validators.Required()],
         description="A detailed description of the session")
-    requirements = wtf.TextAreaField('Requirements',
+    requirements = wtforms.TextAreaField('Requirements',
         description="For workshops, what must participants bring to the session?")
-    slides = wtf.html5.URLField('Slides', validators=[wtf.Optional(), wtf.URL()],
+    slides = wtforms.fields.html5.URLField('Slides', validators=[wtforms.validators.Optional(), wtforms.validators.URL()],
         description="Link to your slides. These can be just an outline initially. "\
             "If you provide a Slideshare link, we'll embed slides in the page")
-    links = wtf.TextAreaField('Links',
+    links = wtforms.TextAreaField('Links',
         description="Other links, one per line. Provide links to your profile and "\
             "slides and videos from your previous sessions; anything that'll help "\
             "folks decide if they want to attend your session")
-    bio = wtf.TextAreaField('Speaker bio', validators=[wtf.Required()],
+    bio = wtforms.TextAreaField('Speaker bio', validators=[wtforms.validators.Required()],
         description="Tell us why you are the best person to be taking this session")
 
 
-class CommentForm(wtf.Form):
-    parent_id = wtf.HiddenField('Parent', default="", id="comment_parent_id")
-    edit_id = wtf.HiddenField('Edit', default="", id="comment_edit_id")
-    message = wtf.TextAreaField('Add comment', id="comment_message", validators=[wtf.Required()])
+class CommentForm(Form):
+    parent_id = wtforms.HiddenField('Parent', default="", id="comment_parent_id")
+    edit_id = wtforms.HiddenField('Edit', default="", id="comment_edit_id")
+    message = wtforms.TextAreaField('Add comment', id="comment_message", validators=[wtforms.validators.Required()])
 
 
-class DeleteCommentForm(wtf.Form):
-    comment_id = wtf.HiddenField('Comment', validators=[wtf.Required()])
+class DeleteCommentForm(Form):
+    comment_id = wtforms.HiddenField('Comment', validators=[wtforms.validators.Required()])
 
 
-class ConfirmDeleteForm(wtf.Form):
+class ConfirmDeleteForm(Form):
     """
     Confirm a delete operation
     """
     # The labels on these widgets are not used. See delete.html.
-    delete = wtf.SubmitField(u"Delete")
-    cancel = wtf.SubmitField(u"Cancel")
+    delete = wtforms.SubmitField(u"Delete")
+    cancel = wtforms.SubmitField(u"Cancel")
 
 
-class ConfirmSessionForm(wtf.Form):
+class ConfirmSessionForm(Form):
     """
     Dummy form for CSRF
     """
