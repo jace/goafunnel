@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}Sections &mdash; {{ space.title }}{% endblock %}
+{% block content %}
+  <ol>
+    {%- for section in sections %}
+      <li><a href="{{ section.url_for('edit') }}">{{ section.title }}</a> &mdash; {{ section.description }}</li>
+    {% else %}
+      <li><em>{% trans %}(No sections){% endtrans %}</em></li>
+    {%- endfor %}
+  </ol>
+  <p>
+    <a class="btn btn-info" href="{{ space.url_for('new-section') }}">{% trans %}Add new section{% endtrans %}</a>
+  </p>
+{% endblock %}

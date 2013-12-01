@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}{{ usergroup.title }} &mdash; {{ space.title }}{% endblock %}
+{% block content %}
+  <h2>{% trans %}Users{% endtrans %}</h2>
+  <ol>
+    {%- for user in usergroup.users %}
+      <li>{{ user.fullname }} {%- if user.username %} (~{{ user.username }}){% endif %}</li>
+    {% else %}
+      <li><em>{% trans %}(No users){% endtrans %}</em></li>
+    {%- endfor %}
+  </ol>
+  <p>
+    <a class="btn btn-info" href="{{ usergroup.url_for('edit') }}">{% trans %}Edit this group{% endtrans %}</a>
+  </p>
+{% endblock %}

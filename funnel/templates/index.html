@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block titletags -%}
+  <title>{{ config['SITE_TITLE'] }}</title>
+  <meta name="DC.title" content="{{ config['SITE_TITLE'] }}"/>
+{%- endblock %}
+
+{% block baseheadline -%}
+  {% block headline -%}{%- endblock %}
+{%- endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      {% block heading %}
+        <div class="page-header">
+          <h1>{{ config['SITE_TITLE'] }}</h1>
+        </div>
+      {% endblock %}
+      <p>
+        {{ config['WELCOME_MESSAGE'] }}
+        {% if siteadmin %}<a href="{{url_for('space_new')}}" style="float:right">{% trans %}New space{% endtrans %}</a>{% endif %}
+      </p>
+    </div>
+  </div>
+  <br />
+  {% if spaces %}
+    <ul class="cardset row">
+      {% for space in spaces %}
+        <li class="col-md-4 col-sm-6">
+          <a href="{{ space.url_for() }}">
+            <div class="card-title">
+              <h2>{{ space.title }}</h2>
+              <h3>{{ space.datelocation }}</h3>
+            </div>
+            <div class="card-body">
+              <p>{{ space.tagline }}</p>
+            </div>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>{% trans %}There are no proposal spaces at this time.{% endtrans %}
+        <a href="{{url_for('space_new')}}">{% trans %}Create one{% endtrans %}</a>.
+    </p>
+  {% endif %}
+
+{% endblock %}

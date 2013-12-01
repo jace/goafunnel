@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}{% trans %}Schedule{% endtrans %} &mdash; {{ space.title }}{% endblock %}
+{% block headline %}{% endblock %}
+{% block pageheaders %}
+  {% assets 'css_fullcalendar' -%}
+    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+  {%- endassets %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+      <a href="{{ space.url_for('subscribe-schedule') }}" class="pull-right btn btn-xs btn-primary" data-toggle="modal" data-target="#popup_subscribe">{% trans %}Subscribe{% endtrans %}</a>
+      <div id="popup_subscribe" class="modal fade viewer"></div>
+      <div id="calendar"></div>
+    </div>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+      <div class="fc-header-title"><h2>{% trans %}Venues{% endtrans %}</h2></div>
+      <div id="rooms-list">
+        {%- for venue in space.venues %}
+          <h2 class="venue">{{ venue.title }}</h2>
+          <div class="venue_desc">{{ venue.description }}</div>
+          {%- for room in venue.rooms %}
+            <div class="room">
+              <h4 class="title" data-bgcolor="#{{ room.bgcolor }}">
+                <a href="{{ room.url_for('ical-schedule', _external=True) }}" class="pull-right small">{% trans %}Subscribe{% endtrans %}</a>
+                {{ room.title }}
+              </h4>
+              <div class="desc">{{ room.description }}</div>
+            </div>
+          {%- endfor %}
+        {%- else %}
+          <p>{% trans %}This event does not have a venue{% endtrans %}</p>
+        {%- endfor %}
+      </div>
+    </div>
+  </div>
+  <div id="popup" class="modal fade viewer">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body"></div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block footerscripts %}
+  {% assets "js_fullcalendar" -%}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {%- endassets -%}
+  <script type="text/javascript">
+    var from_date = {{ from_date|tojson }}, to_date = {{ to_date|tojson }};
+    var scheduled = {{ sessions|tojson }};
+    var TIMEZONE = {{ timezone }} * 1000;
+    var ROOMS = {{ rooms|tojson }};
+    var BREAK_EVENTS_COLOR = "#999999";
+    var EDIT_EVENTS = false;
+  </script>
+  {% assets "js_schedules" -%}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {%- endassets -%}
+{% endblock %}

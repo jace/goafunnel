@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}{% trans %}Authorization error{% endtrans %}{% endblock %}
+{% block content %}
+<p>
+  {% trans %}An error occured when logging you in.{% endtrans %}
+</p>
+<dl class="infobox">
+  <dt>{% trans %}Error{% endtrans %}</dt>
+  <dd>{{ error }}</dd>
+  {% if error_description %}
+    <dt>{% trans %}Description{% endtrans %}</dt>
+    <dd>{{ error_description }}</dd>
+  {% endif %}
+  {% if error_uri %}
+    <dt>{% trans %}Error URI{% endtrans %}</dt>
+    <dd>{{ error_uri }}</dd>
+  {% endif %}
+</dl>
+{% endblock %}

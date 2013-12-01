@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}User groups &mdash; {{ space.title }}{% endblock %}
+{% block content %}
+  <ol>
+    {%- for group in usergroups %}
+      <li><a href="{{ group.url_for() }}">{{ group.title }}</a></li>
+    {% else %}
+      <li><em>{% trans %}(No user groups){% endtrans %}</em></li>
+    {%- endfor %}
+  </ol>
+  <p>
+    <a class="btn btn-info" href="{{ space.url_for('new-usergroup') }}">{% trans %}Add new group{% endtrans %}</a>
+  </p>
+{% endblock %}
