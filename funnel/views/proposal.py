@@ -118,7 +118,7 @@ def proposal_data_flat(proposal, groups=[]):
     permission='new-proposal', addlperms=lastuser.permissions)
 def proposal_new(space):
     form = ProposalForm(model=Proposal, parent=space)
-    del form.session_type  # We don't use this anymore
+    # del form.session_type  # We don't use this anymore  # But The Goa Project still does, so commented out
     form.section.query = ProposalSpaceSection.query.filter_by(proposal_space=space, public=True).order_by('title')
     if len(list(form.section.query.all())) == 0:
         # Don't bother with sections when there aren't any

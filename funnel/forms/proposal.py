@@ -21,11 +21,12 @@ class ProposalForm(Form):
         description=__("What is the expected benefit for someone attending this?"))
     session_type = wtforms.RadioField(__("Session type"), validators=[wtforms.validators.Required()], choices=[
         ('Lecture', __("Lecture")),
-        ('Demo', __("Demo")),
-        ('Tutorial', __("Tutorial")),
+        ('Debate', __("Debate")),
+        ('Q&A', __("Q&A")),
         ('Workshop', __("Workshop")),
-        ('Discussion', __("Discussion")),
-        ('Panel', __("Panel")),
+        ('Lightning Talk', __("Lightning Talk")),
+        ('BoF Meet', __("BoF Meet")),
+        ('Demo', __("Demo")),
         ])
     technical_level = wtforms.RadioField(__("Technical level"), validators=[wtforms.validators.Required()], choices=[
         ('Beginner', __("Beginner")),
