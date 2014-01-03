@@ -7,5 +7,5 @@ init_for('dev')
 try:
     port = int(sys.argv[1])
 except (IndexError, ValueError):
-    port = 3000
+    port = 3001
 app.run('0.0.0.0', port=port, debug=True)
