@@ -25,6 +25,7 @@ footer .footer-inner {
 
 #logo {
     @include replace-text-with-dimensions('logo.png');
+    background-size: 75% 75%;
 }
 
 #hg-networkbar.navbar .navbar-brand{
