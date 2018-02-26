@@ -63,7 +63,7 @@
       <a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="{{ config['TWITTER_ID'] }}">Tweet</a>
       <g:plusone size="medium"></g:plusone>
       <iframe class="facebooklike" src="//www.facebook.com/plugins/like.php?app_id=114496105304651&amp;href={{ request.url }}&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=recommend&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe>
-      {% if 'siteadmin' in g.lastuserinfo.permissions %}
+      {% if 'siteadmin' in current_auth.lastuserinfo.permissions %}
         <form method="POST" action="{{ proposal.url_for('confirm') }}" style="float: right">
           {{ confirmform.hidden_tag() }}
           {% if proposal.confirmed -%}
